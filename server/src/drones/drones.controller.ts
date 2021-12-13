@@ -6,7 +6,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { CreateDroneDto } from 'src/dtos/create-drone.dto';
+import { CreateDroneDto } from 'src/drones/dtos/create-drone.dto';
 import { DronesService } from './drones.service';
 
 @Controller('/v1/drones')
