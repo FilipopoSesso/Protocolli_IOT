@@ -30,8 +30,7 @@ export class DronesController {
   @Post()
   async createDrone(@Body() body: CreateDroneDto) {
     const drone = await this.dronesService.create(
-      body.latitude,
-      body.longitude,
+      body.position,
       body.battery,
       body.altitude,
     );

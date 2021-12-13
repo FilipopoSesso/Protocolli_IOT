@@ -1,13 +1,9 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateDroneDto {
   @IsNotEmpty()
-  @IsNumber()
-  latitude: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  longitude: number;
+  @IsArray()
+  position: number[];
 
   @IsNotEmpty()
   @IsNumber()

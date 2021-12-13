@@ -8,11 +8,12 @@ export class DronesService {
   constructor(@InjectRepository(Drone) private repo: Repository<Drone>) {}
 
   create(
-    latitude: number,
-    longitude: number,
+    position: number[],
     battery: number,
     altitude: number,
   ) {
+    const latitude = position[0];
+    const longitude = position[1];
     const drone = this.repo.create({ latitude, longitude, battery, altitude });
     return this.repo.save(drone);
   }
