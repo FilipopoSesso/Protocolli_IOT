@@ -9,7 +9,7 @@ import {
 import { CreateDroneDto } from 'src/drones/dtos/create-drone.dto';
 import { DronesService } from './drones.service';
 
-@Controller('/v1/drones')
+@Controller('v1/drones')
 export class DronesController {
   constructor(private dronesService: DronesService) {}
 
