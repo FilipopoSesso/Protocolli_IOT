@@ -11,5 +11,9 @@ export class CreateDroneDto {
 
   @IsNotEmpty()
   @IsNumber()
+  speed: number;
+
+  @IsNotEmpty()
+  @IsNumber()
   altitude: number;
 }

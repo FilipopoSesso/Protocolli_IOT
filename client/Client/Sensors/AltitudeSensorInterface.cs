@@ -7,6 +7,6 @@ namespace Client.Sensors
 {
     internal interface AltitudeSensorInterface
     {
-        int GetAltitude();
+        double GetAltitude();
     }
 }

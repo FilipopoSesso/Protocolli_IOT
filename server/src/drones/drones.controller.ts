@@ -6,6 +6,7 @@ import {
   Logger,
   NotFoundException,
   Param,
+  ParseIntPipe,
   Post,
 } from '@nestjs/common';
 import { CreateDroneDto } from 'src/drones/dtos/create-drone.dto';
@@ -23,12 +24,9 @@ export class DronesController {
   }
 
   @Get('/:id')
-  async getDrone(@Param('id') id: string, @Ip() ip: string) {
+  async getDrone(@Param('id',ParseIntPipe) id: number, @Ip() ip: string) {
     this.logger.log(`GET - /v1/drones/${id} - ${ip}`);
-    const drone = await this.dronesService.findOne(parseInt(id));
-    if (!drone) {
-      throw new NotFoundException('Drone not found');
-    }
+    const drone = await this.dronesService.findOne(id);
     return drone;
   }
 
@@ -39,6 +37,7 @@ export class DronesController {
     return this.dronesService.create(
       body.position,
       body.battery,
+      body.speed,
       body.altitude,
     );
   }

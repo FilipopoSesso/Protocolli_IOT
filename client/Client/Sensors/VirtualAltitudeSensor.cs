@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace Client.Sensors
 {
     class VirtualAltitudeSensor : AltitudeSensorInterface, SensorInterface
     {
-        public string toJson()
+        public JProperty toJson()
         {
-            return "{\"altitude\": " + GetAltitude() + "}";
+            return new JProperty("altitude", GetAltitude());
         }
 
-        public int GetAltitude()
+        public double GetAltitude()
         {
             var random = new Random();
-            return random.Next(1,100);
+            return Math.Round(random.NextDouble() * (100-1) + 1, 2);
         }
     }
 }

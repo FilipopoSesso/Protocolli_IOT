@@ -3,27 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace Client.Sensors
 {
     class VirtualPositionSensor : PositionSensorInterface, SensorInterface
     {
-        public string toJson()
+        public JProperty toJson()
         {
             //lat→Y lon→X
-            return "Position:{\"lat\": " + GetLatPosition() + ", \"lon\": " + GetLonPosition() + "}";
+            double[] position = new double[2] { GetLatPosition(), GetLonPosition() };
+            return new JProperty("position", position);
         }
 
-        public int GetLatPosition()
+        public double GetLatPosition()
         {
             var random = new Random();
-            return random.Next(516400146, 630304598);
+            int tmp = random.Next(516400146, 630304598);
+            double lat = Math.Round(45d + tmp / 1000000000d, 4);
+            return lat;
         }
 
-        public int GetLonPosition()
+        public double GetLonPosition()
         {
             var random = new Random();
-            return random.Next(224464416, 341194152);
+            int tmp = random.Next(224464416, 341194152);
+            double lon = Math.Round(12d - tmp / 1000000000d, 4);
+            return lon;
         }
 
     }

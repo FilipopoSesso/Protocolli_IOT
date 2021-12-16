@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace Client.Sensors
 {
     class VirtualSpeedSensor : SpeedSensorInterface, SensorInterface
     {
-        public string toJson()
+        public JProperty toJson()
         {
-            return "{\"speed\": " + GetSpeed() + "}";
+            return new JProperty("speed", GetSpeed());
         }
 
         public int GetSpeed()

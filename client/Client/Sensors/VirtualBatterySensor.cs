@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace Client.Sensors
 {
     class VirtualBatterySensor : BatterySensorInterface, SensorInterface
     {
-        public string toJson()
+        public JProperty toJson()
         {
-            return "{\"battery\": " + GetBattery() + "}";
+            return new JProperty("battery", GetBattery());
         }
 
         public int GetBattery()

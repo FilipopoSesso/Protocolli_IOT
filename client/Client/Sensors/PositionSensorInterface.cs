@@ -7,7 +7,7 @@ namespace Client.Sensors
 {
     internal interface PositionSensorInterface
     {
-        int GetLatPosition();
-        int GetLonPosition();
+        double GetLatPosition();
+        double GetLonPosition();
     }
 }

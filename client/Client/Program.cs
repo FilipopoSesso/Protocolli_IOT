@@ -14,38 +14,30 @@ namespace Client
         static void Main(string[] args)
         {
             // init sensors
-            /*List<SensorInterface> sensors = new List<SensorInterface>();
+            List<SensorInterface> sensors = new List<SensorInterface>();
             sensors.Add(new VirtualSpeedSensor());
             sensors.Add(new VirtualAltitudeSensor());
             sensors.Add(new VirtualBatterySensor());
             sensors.Add(new VirtualPositionSensor());
+
+            JObject drone = new JObject();
+
             foreach (SensorInterface sensor in sensors)
             {
-                Console.WriteLine(sensor.toJson());
-            }*/
+                drone.Add(sensor.toJson());
+            }
 
             // define protocol
-            ProtocolInterface protocol = new Http("http://10.30.134.11:3000/v1/drones");
+            ProtocolInterface protocol = new Http("http://localhost:3000/v1/drones");
+
+            Console.WriteLine("Data sent: " + drone.ToString());
 
             // send data to server
-            while (true)
-            {
+            protocol.Send(drone.ToString());
 
-                dynamic drone = new JObject();
-                drone.battery = new VirtualBatterySensor().GetBattery();
-                drone.speed = new VirtualSpeedSensor().GetSpeed();
-                drone.altitude = new VirtualAltitudeSensor().GetAltitude();
-                drone.position = new JObject();
-                drone.position.len=new VirtualPositionSensor().GetLatPosition();
-                drone.position.lon=new VirtualPositionSensor().GetLonPosition();
+            Console.ReadKey();
 
-                Console.WriteLine("Data sent: " + drone.ToString());
-                
-                protocol.Send(drone.ToString());
-                
-                Thread.Sleep(1000);
-
-            }
+            //Thread.Sleep(1000);
 
         }
 

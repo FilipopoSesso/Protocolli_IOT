@@ -5,15 +5,18 @@ export class Drone {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column('float')
   latitude: number;
 
-  @Column()
+  @Column('float')
   longitude: number;
 
   @Column()
   battery: number;
 
   @Column()
+  speed: number;
+
+  @Column('float')
   altitude: number;
 }
