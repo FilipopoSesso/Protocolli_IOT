@@ -4,7 +4,6 @@ import {
   Get,
   Ip,
   Logger,
-  NotFoundException,
   Param,
   ParseIntPipe,
   Post,

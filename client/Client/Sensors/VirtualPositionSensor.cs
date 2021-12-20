@@ -12,8 +12,7 @@ namespace Client.Sensors
         public JProperty toJson()
         {
             //lat→Y lon→X
-            double[] position = new double[2] { GetLatPosition(), GetLonPosition() };
-            return new JProperty("position", position);
+            return new JProperty("position", new JObject(new JProperty("lat", GetLatPosition()), new JProperty("lon", GetLonPosition())));
         }
 
         public double GetLatPosition()

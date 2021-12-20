@@ -7,10 +7,15 @@ import { Drone } from './drone.entity';
 export class DronesService {
   constructor(@InjectRepository(Drone) private repo: Repository<Drone>) {}
 
-  create(position: number[], battery: number, speed: number, altitude: number) {
+  create(
+    position: { lat: number; lon: number },
+    battery: number,
+    speed: number,
+    altitude: number,
+  ) {
     const drone = this.repo.create({
-      latitude: position[0],
-      longitude: position[1],
+      latitude: position.lat,
+      longitude: position.lon,
       battery,
       speed,
       altitude,
