@@ -1,8 +1,7 @@
-import { IsNotEmpty, IsNumber, IsObject } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsNotEmptyObject } from 'class-validator';
 
 export class CreateDroneDto {
-  @IsNotEmpty()
-  @IsObject()
+  @IsNotEmptyObject()
   position: { lat: number; lon: number };
 
   @IsNotEmpty()
