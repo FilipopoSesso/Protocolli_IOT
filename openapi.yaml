@@ -1,0 +1,254 @@
+openapi: 3.0.0
+paths:
+  /v1/drones:
+    get:
+      operationId: DronesController_getAllDrones
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drone'
+      tags:
+        - Drones
+  /v1/drones/{id}:
+    get:
+      operationId: DronesController_getDrone
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Drone'
+      tags:
+        - Drones
+    patch:
+      operationId: DronesController_updateDrone
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDroneDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Drone'
+      tags:
+        - Drones
+  /v1/drones/{id}/status:
+    get:
+      operationId: DronesController_getLastDroneStatus
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DroneStatus'
+      tags:
+        - Drones
+  /v1/drones/new:
+    post:
+      operationId: DronesController_createDrone
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDroneDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Drone'
+      tags:
+        - Drones
+  /v1/drones/status:
+    post:
+      operationId: DronesController_saveDroneStatus
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveDroneStatusDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DroneStatus'
+      tags:
+        - Drones
+info:
+  title: Protocolli IoT
+  description: Drones API
+  version: '1.0'
+  contact: {}
+tags:
+  - name: Drones
+    description: ''
+servers: []
+components:
+  schemas:
+    Drone:
+      type: object
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        customer:
+          type: string
+        rentalStart:
+          format: date-time
+          type: string
+        rentalEnd:
+          format: date-time
+          type: string
+        state:
+          type: boolean
+      required:
+        - id
+        - model
+        - customer
+        - rentalStart
+        - rentalEnd
+        - state
+    DroneStatus:
+      type: object
+      properties:
+        id:
+          type: number
+        latitude:
+          type: number
+        longitude:
+          type: number
+        battery:
+          type: number
+        speed:
+          type: number
+        altitude:
+          type: number
+        drone:
+          $ref: '#/components/schemas/Drone'
+      required:
+        - id
+        - latitude
+        - longitude
+        - battery
+        - speed
+        - altitude
+        - drone
+    CreateDroneDto:
+      type: object
+      properties:
+        rentalStart:
+          type: object
+          description: 'format: YYYY-MM-DD hh:mm:ss'
+          example: '2021-12-25 10:50:20'
+        rentalEnd:
+          type: object
+          description: 'format: YYYY-MM-DD hh:mm:ss'
+          example: '2021-12-25 10:50:20'
+        id:
+          type: string
+        model:
+          type: string
+        customer:
+          type: string
+        state:
+          type: boolean
+      required:
+        - rentalStart
+        - rentalEnd
+        - id
+        - model
+        - customer
+        - state
+    UpdateDroneDto:
+      type: object
+      properties:
+        rentalStart:
+          type: object
+          description: 'format: YYYY-MM-DD hh:mm:ss'
+          example: '2021-12-25 10:50:20'
+        rentalEnd:
+          type: object
+          description: 'format: YYYY-MM-DD hh:mm:ss'
+          example: '2021-12-25 10:50:20'
+        id:
+          type: string
+        model:
+          type: string
+        customer:
+          type: string
+        state:
+          type: boolean
+      required:
+        - rentalStart
+        - rentalEnd
+        - id
+        - model
+        - customer
+        - state
+    SaveDroneStatusDto:
+      type: object
+      properties:
+        position:
+          type: object
+          properties:
+            lat:
+              required: true
+              type: number
+            lon:
+              required: true
+              type: number
+        battery:
+          type: number
+        speed:
+          type: number
+        altitude:
+          type: number
+        drone:
+          $ref: '#/components/schemas/Drone'
+      required:
+        - position
+        - battery
+        - speed
+        - altitude
+        - drone

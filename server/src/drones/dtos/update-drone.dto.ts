@@ -1,10 +1,5 @@
-import {
-  IsBoolean,
-  IsDate,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsDateString, IsOptional, IsString } from 'class-validator';
 
 export class UpdateDroneDto {
   @IsOptional()
@@ -19,13 +14,15 @@ export class UpdateDroneDto {
   @IsString()
   customer: string;
 
+  @ApiProperty({description: 'format: YYYY-MM-DD hh:mm:ss', example:'2021-12-25 10:50:20'})
   @IsOptional()
-  @IsDate()
-  rentalStart: Date;
+  @IsDateString()
+  rentalStart;
 
+  @ApiProperty({description: 'format: YYYY-MM-DD hh:mm:ss', example:'2021-12-25 10:50:20'})
   @IsOptional()
-  @IsDate()
-  rentalEnd: Date;
+  @IsDateString()
+  rentalEnd;
 
   @IsOptional()
   @IsBoolean()
