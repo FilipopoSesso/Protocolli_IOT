@@ -1,7 +1,9 @@
 import Package as pk
 
 def Send(data):
-    base_url = f'"http://10.30.134.11:3000/v1/drones"'
+    #base_url = f'"http://10.30.134.11:3000/v1/drones"'
+
+    base_url = f'"http://127.0.0.1:5000/v1/drones"'
 
     req = pk.rq.post(base_url, data=data)
 
