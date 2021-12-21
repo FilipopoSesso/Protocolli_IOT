@@ -12,6 +12,6 @@ export class Drone {
   @Column()
   model: string;
 
-  @OneToMany(() => DroneStatus, droneStatus => droneStatus.drone)
-  status: DroneStatus[]
+  // @OneToMany(() => DroneStatus, droneStatus => droneStatus.drone)
+  // status: DroneStatus[]
 }

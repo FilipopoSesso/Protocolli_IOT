@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsNotEmptyObject } from 'class-validator';
+import { Drone } from '../drone.entity';
 
 export class SaveDroneStatusDto {
   @IsNotEmptyObject()
@@ -15,4 +16,7 @@ export class SaveDroneStatusDto {
   @IsNotEmpty()
   @IsNumber()
   altitude: number;
+
+  @IsNotEmpty()
+  drone: Drone;
 }

@@ -26,6 +26,7 @@ export class DronesService {
     battery: number,
     speed: number,
     altitude: number,
+    drone: Drone,
   ) {
     const status = this.droneStatusRepo.create({
       latitude: position.lat,
@@ -33,6 +34,7 @@ export class DronesService {
       battery,
       speed,
       altitude,
+      drone,
     });
     return this.droneStatusRepo.save(status);
   }

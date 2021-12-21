@@ -48,6 +48,7 @@ export class DronesController {
       body.battery,
       body.speed,
       body.altitude,
+      body.drone,
     );
   }
 }

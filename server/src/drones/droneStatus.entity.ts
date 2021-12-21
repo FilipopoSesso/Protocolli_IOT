@@ -21,6 +21,6 @@ export class DroneStatus {
   @Column('float')
   altitude: number;
 
-  @ManyToOne(() => Drone, drone => drone.status)
+  @ManyToOne(() => Drone /*, drone => drone.status*/)
   drone: Drone
 }
