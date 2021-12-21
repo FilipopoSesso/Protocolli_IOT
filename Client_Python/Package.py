@@ -1,3 +1,4 @@
+#file delle librerie
 import requests as rq
 import json
 import pandas as pd
