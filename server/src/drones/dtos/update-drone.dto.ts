@@ -6,28 +6,28 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateDroneDto {
-  @IsNotEmpty()
+export class UpdateDroneDto {
+  @IsOptional()
   @IsString()
   id: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   model: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   customer: string;
 
-  @IsDate()
   @IsOptional()
+  @IsDate()
   rentalStart: Date;
 
-  @IsDate()
   @IsOptional()
+  @IsDate()
   rentalEnd: Date;
 
-  @IsBoolean()
   @IsOptional()
+  @IsBoolean()
   state: boolean;
 }

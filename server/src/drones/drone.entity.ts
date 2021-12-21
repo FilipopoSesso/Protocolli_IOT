@@ -1,22 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { DroneStatus } from './droneStatus.entity';
 
 @Entity()
 export class Drone {
-  @PrimaryGeneratedColumn()
-  id: number;
+  // @PrimaryGeneratedColumn()
+  // id: number;
 
-  @Column('float')
-  latitude: number;
-
-  @Column('float')
-  longitude: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
-  battery: number;
+  model: string;
 
-  @Column()
-  speed: number;
+  @Column({nullable: true})
+  customer: string;
 
-  @Column('float')
-  altitude: number;
+  @Column({nullable: true})
+  rentalStart: Date;
+
+  @Column({nullable: true})
+  rentalEnd: Date;
+
+  @Column({nullable: true})
+  state: boolean;
+  // @OneToMany(() => DroneStatus, droneStatus => droneStatus.drone)
+  // status: DroneStatus[]
 }
