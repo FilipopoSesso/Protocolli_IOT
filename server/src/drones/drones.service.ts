@@ -16,8 +16,8 @@ export class DronesService {
     private droneStatusRepo: Repository<DroneStatus>,
   ) {}
 
-  create(attrs: Partial<Drone>) {
-    const exist = this.droneRepo.findOne({ id: attrs.id });
+  async create(attrs: Partial<Drone>) {
+    const exist = await this.droneRepo.findOne({ id: attrs.id });
     if (exist) {
       throw new BadRequestException(`cannot duplicate '${attrs.id}'`);
     }

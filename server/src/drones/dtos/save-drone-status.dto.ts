@@ -16,7 +16,7 @@ export class SaveDroneStatusDto {
   @IsNotEmpty()
   @IsNumber()
   altitude: number;
-
+  
   @IsNotEmpty()
-  drone: Drone;
+  drone: Drone
 }
