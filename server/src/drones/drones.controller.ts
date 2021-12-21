@@ -8,9 +8,11 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateDroneDto } from 'src/drones/dtos/create-drone.dto';
 import { DronesService } from './drones.service';
 
+@ApiTags('Drones')
 @Controller('v1/drones')
 export class DronesController {
   constructor(private dronesService: DronesService) {}
