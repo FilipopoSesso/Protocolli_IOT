@@ -9,7 +9,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateDroneDto } from 'src/drones/dtos/create-drone.dto';
+import { SaveDroneStatusDto } from './dtos/save-drone-status.dto';
+import { CreateDroneDto } from './dtos/create-drone.dto';
 import { DronesService } from './drones.service';
 
 @ApiTags('Drones')
@@ -25,17 +26,24 @@ export class DronesController {
   }
 
   @Get('/:id')
-  async getDrone(@Param('id',ParseIntPipe) id: number, @Ip() ip: string) {
+  async getDrone(@Param('id', ParseIntPipe) id: number, @Ip() ip: string) {
     this.logger.log(`GET - /v1/drones/${id} - ${ip}`);
     const drone = await this.dronesService.findOne(id);
     return drone;
   }
 
-  @Post()
+  @Post('/new')
   createDrone(@Body() body: CreateDroneDto, @Ip() ip: string) {
-    this.logger.log(`POST - /v1/drones - ${ip}`);
+    this.logger.log(`POST - /v1/drones/new - ${ip}`);
     this.logger.log(body);
-    return this.dronesService.create(
+    return this.dronesService.create(body.name, body.model);
+  }
+
+  @Post('/status')
+  saveDroneStatus(@Body() body: SaveDroneStatusDto, @Ip() ip: string) {
+    this.logger.log(`POST - /v1/drones/status - ${ip}`);
+    this.logger.log(body);
+    return this.dronesService.saveStatus(
       body.position,
       body.battery,
       body.speed,

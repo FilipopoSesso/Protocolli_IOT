@@ -1,18 +1,14 @@
-import { IsNotEmpty, IsNumber, IsNotEmptyObject } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 
 export class CreateDroneDto {
-  @IsNotEmptyObject()
-  position: { lat: number; lon: number };
-
   @IsNotEmpty()
-  @IsNumber()
-  battery: number;
-
+  @IsString()
+  name: string;
+  
   @IsNotEmpty()
-  @IsNumber()
-  speed: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  altitude: number;
+  @IsString()
+  model: string;
 }

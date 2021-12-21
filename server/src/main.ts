@@ -18,16 +18,16 @@ async function bootstrap() {
     }),
   );
 
-  const config = new DocumentBuilder()
-  .setTitle('Protocolli IoT')
-  .setDescription('Drones API')
-  .setVersion('1.0')
-  .addTag('Drones')
-  .build();
+  // const config = new DocumentBuilder()
+  // .setTitle('Protocolli IoT')
+  // .setDescription('Drones API')
+  // .setVersion('1.0')
+  // .addTag('Drones')
+  // .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  // const document = SwaggerModule.createDocument(app, config);
+  // SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  await app.listen(5000);
 }
 bootstrap();

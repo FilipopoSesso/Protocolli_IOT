@@ -1,22 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { DroneStatus } from './droneStatus.entity';
 
 @Entity()
 export class Drone {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('float')
-  latitude: number;
-
-  @Column('float')
-  longitude: number;
+  @Column()
+  name: string;
 
   @Column()
-  battery: number;
+  model: string;
 
-  @Column()
-  speed: number;
-
-  @Column('float')
-  altitude: number;
+  @OneToMany(() => DroneStatus, droneStatus => droneStatus.drone)
+  status: DroneStatus[]
 }
