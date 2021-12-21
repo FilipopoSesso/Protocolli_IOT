@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Drone } from './drone.entity';
@@ -12,12 +16,21 @@ export class DronesService {
     private droneStatusRepo: Repository<DroneStatus>,
   ) {}
 
-  create(name: string, model: string) {
-    const drone = this.droneRepo.create({
-      name,
-      model,
-    });
+  create(attrs: Partial<Drone>) {
+    const exist = this.droneRepo.findOne({ id: attrs.id });
+    if (exist) {
+      throw new BadRequestException(`cannot duplicate '${attrs.id}'`);
+    }
+    const drone = this.droneRepo.create(attrs);
+    return this.droneRepo.save(drone);
+  }
 
+  async update(id: string, attrs: Partial<Drone>) {
+    const drone = await this.droneRepo.findOne(id);
+    if (!drone) {
+      throw new NotFoundException('drone not found');
+    }
+    Object.assign(drone, attrs);
     return this.droneRepo.save(drone);
   }
 
@@ -39,7 +52,7 @@ export class DronesService {
     return this.droneStatusRepo.save(status);
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const drone = await this.droneRepo.findOne(id);
     if (!drone) {
       throw new NotFoundException('Drone not found');
@@ -49,5 +62,19 @@ export class DronesService {
 
   findAll() {
     return this.droneRepo.find();
+  }
+
+  async findLast(id: string) {
+    const last = await this.droneStatusRepo.find({
+      where: { drone: id },
+      order: { id: 'DESC' },
+      skip: 0,
+      take: 1,
+    });
+    console.log(last);
+    if (!last.length) {
+      throw new NotFoundException();
+    }
+    return last;
   }
 }
