@@ -91,7 +91,7 @@ def getFilteredDrones():
     lat = query_parameters.get('lat')
     lon = query_parameters.get('lat')
     
-    query = "SELECT * FROM books WHERE"
+    query = "SELECT * FROM drones WHERE"
     to_filter = []
 
     if id:
