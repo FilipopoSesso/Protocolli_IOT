@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.IO;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Client.Protocols
 {
@@ -27,9 +29,38 @@ namespace Client.Protocols
 
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
 
-            Console.Out.WriteLine(httpResponse.StatusCode);
+            //Console.Out.WriteLine(httpResponse.StatusCode);
+            Console.WriteLine(httpResponse.StatusCode);
+            httpResponse.Close();
+        }
+
+        protected class Drones
+        {
+            public int id { get; set; }
+            public string name { get; set; }
+            public string model { get; set; }
+        }
+
+        public string Recive()
+        {
+            httpWebRequest = (HttpWebRequest)WebRequest.Create(endpoint);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "GET";
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+           
+            //Console.Out.WriteLine(httpResponse.StatusCode);
+            Console.WriteLine(httpResponse.StatusCode);
+            
+            Stream stream = httpResponse.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+
+            string drones=reader.ReadToEnd();
+            Drones[] x= JsonSerializer.Deserialize<Drones[]>(drones);
+
 
             httpResponse.Close();
+            return drones;
         }
     }
 }
