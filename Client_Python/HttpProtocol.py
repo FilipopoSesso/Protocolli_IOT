@@ -5,7 +5,7 @@ LAST_DRONE_DATA={}
 TIMER=10
 
 #funzione per eseguire l'invio di dati dopo un intervallo di tempo specificato
-def doPolling():
+async def doPolling():
     pk.schedule.every(TIMER).seconds.do(sendSensors)
     while True:
         pk.schedule.run_pending()
