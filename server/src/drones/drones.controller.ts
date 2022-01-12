@@ -47,7 +47,7 @@ export class DronesController {
   //   return lastStatus;
   // }
 
-  // @MessagePattern()
+  // @Post('/new')
   // createDrone(@Body() body: CreateDroneDto, @Ip() ip: string) {
   //   this.logger.log(`POST - /v1/drones/new - ${ip}`);
   //   this.logger.log(body);
@@ -75,6 +75,6 @@ export class DronesController {
       data.altitude,
       data.drone,
     );
-    this.client.emit(`v1/drones/${data.drone}/data/all/response`, "drone status saved")
+    this.client.emit(`v1/drones/${data.drone}/currentposition`, data.position)
   }
 }
