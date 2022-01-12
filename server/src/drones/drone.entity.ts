@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, PrimaryColumn } from 'typeorm';
-import { DroneStatus } from './droneStatus.entity';
+//import { DroneStatus } from './droneStatus.entity';
 
 @Entity()
 export class Drone {
