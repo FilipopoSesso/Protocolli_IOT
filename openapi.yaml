@@ -95,25 +95,6 @@ paths:
                 $ref: '#/components/schemas/Drone'
       tags:
         - Drones
-  /v1/drones/status:
-    post:
-      operationId: DronesController_saveDroneStatus
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SaveDroneStatusDto'
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DroneStatus'
-      tags:
-        - Drones
 info:
   title: Protocolli IoT
   description: Drones API
