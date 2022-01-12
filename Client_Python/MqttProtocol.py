@@ -9,7 +9,7 @@ import Drones
 BROKER = 'test.mosquitto.org'
 PORT = 1883
 TOPIC,MSG=range(2)
-TIMER=10
+TIMER=3
 
 # topic = "v1/drones/droneName/data/sensor"
 # generate client ID with pub prefix randomly
@@ -26,7 +26,9 @@ def connect_mqtt():
     client = pk.mqtt.Client(client_id)
     client.username_pw_set('username', 'password')
     client.on_connect = on_connect
-    client.connect(BROKER, PORT)
+    client.connect(BROKER, PORT, keepalive=60)
+    client.will_set("v1/",payload='OFF', qos=2, retain=True)
+    
     return client
 
 #creazione del CLIENT con cui effettuare operazioni di lettura/scrittura

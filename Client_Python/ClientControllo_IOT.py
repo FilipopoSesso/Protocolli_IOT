@@ -1,5 +1,6 @@
 import Package as pk
 import Drones
+import Map
 import HttpProtocol
 import MqttProtocol
 
@@ -41,7 +42,7 @@ MODELLIST=[
                 "DJI SPARK COMBO"
             ]
 
-MENU="______________MENU______________\n1) Create drone\n2) Drone by name\n3) Drones list\n4) Change drone status\n5) Exit\n--------------------------------\n"
+MENU="______________MENU______________\n1) Create drone\n2) Drone by name\n3) Drones list\n4) Change drone status\n5) View Map\n6) Exit\n--------------------------------\n"
 #cuore del programma
 if __name__=="__main__":
     loop=True
@@ -81,7 +82,11 @@ if __name__=="__main__":
                 name=parameter("Name")
                 HttpProtocol.changeStatus(name)
                 input('\nPress any button to continue...')
+            
             case 5:
+                Map.openMap()
+                
+            case 6:
                 clear()
                 loop=False
             
