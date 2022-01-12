@@ -11,11 +11,12 @@ PORT = 1883
 TOPIC,MSG=range(2)
 TIMER=10
 
-async def doPolling():
+def doPolling():
     pk.schedule.every(TIMER).seconds.do(sendSensors)
     while True:
         pk.schedule.run_pending()
         pk.time.sleep(1)
+    
 
 
 # topic = "v1/drones/droneName/data/sensor"
@@ -44,7 +45,7 @@ def publish(client):
     # result: [0, 1]
     status = result[0]
     if status == 0:
-        print(f"Send `{msg}` to topic `{TOPIC}`")
+        print(f"Send {msg} to topic {TOPIC}")
     else:
         print(f"Failed to send message to topic {TOPIC}")
 
@@ -68,10 +69,12 @@ def sendMessage(topic, msg):
 def sendSensors():
     drone=Drones.getDrone()
     name=drone["drone"]
+    pk.os.system('clear')
+    sendMessage(f'v1/drones/{name}/data/all', str(drone).replace("'",'"'))
     sendMessage(f'v1/drones/{name}/data/speed', drone["speed"])
     sendMessage(f'v1/drones/{name}/data/altitude', drone["altitude"])
     sendMessage(f'v1/drones/{name}/data/battery', drone["battery"])
-    sendMessage(f'v1/drones/{name}/data/position', drone["position"])
+    sendMessage(f'v1/drones/{name}/data/position', f'lat:{drone["position"]["lat"]}, lon:{drone["position"]["lon"]}')
     sendMessage(f'v1/drones/{name}/data/position/lat', drone["position"]["lat"])
     sendMessage(f'v1/drones/{name}/data/position/lon', drone["position"]["lon"])
-
+    
