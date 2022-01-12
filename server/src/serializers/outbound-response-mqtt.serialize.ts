@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 
 export class OutboundResponseSerializer implements Serializer {
 
-    private readonly logger = new Logger('OutboundResponseIdentitySerializer');
+    private readonly logger = new Logger('OutboundResponseMqttSerializer');
 
     serialize(value: any): OutgoingResponse {
       this.logger.debug(`-->> Serializing outbound response: \n${JSON.stringify(value)}`);
