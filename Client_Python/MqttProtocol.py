@@ -1,17 +1,5 @@
 import Package as pk
-
-# def on_connect(client, userdata, flags, rc):
-#     print("Connected with result code "+str(rc))
-#     client.subscribe("$SYS/#")
-    
-# def on_message(client, userdata, msg):
-#     print(msg.topic+" "+str(msg.payload))
-
-# client = pk.mqtt.Client()
-# client.on_connect = on_connect
-# client.on_message = on_message
-
-# client.connect("mqtt.eclipseprojects.io", 1883, 60)
+import Drones
 
 #wildcard
 #v1/drones/droneName/data → return dataByName
@@ -21,7 +9,16 @@ import Package as pk
 BROKER = 'test.mosquitto.org'
 PORT = 1883
 TOPIC,MSG=range(2)
-#topic = "v1/drones/droneName/data/sensor"
+TIMER=10
+
+async def doPolling():
+    pk.schedule.every(TIMER).seconds.do(sendSensors)
+    while True:
+        pk.schedule.run_pending()
+        pk.time.sleep(1)
+
+
+# topic = "v1/drones/droneName/data/sensor"
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{pk.ran.randint(0, 1000)}'
 
@@ -61,13 +58,20 @@ def publish(client):
 def sendMessage(topic, msg):
     global TOPIC
     global MSG
-    client = connect_mqtt()
-    #client.loop_start()
     TOPIC=topic
     MSG=msg
+    
+    client = connect_mqtt()
+    #client.loop_start()
     publish(client)
 
-
-
-
+def sendSensors():
+    drone=Drones.getDrone()
+    name=drone["drone"]
+    sendMessage(f'v1/drones/{name}/data/speed', drone["speed"])
+    sendMessage(f'v1/drones/{name}/data/altitude', drone["altitude"])
+    sendMessage(f'v1/drones/{name}/data/battery', drone["battery"])
+    sendMessage(f'v1/drones/{name}/data/position', drone["position"])
+    sendMessage(f'v1/drones/{name}/data/position/lat', drone["position"]["lat"])
+    sendMessage(f'v1/drones/{name}/data/position/lon', drone["position"]["lon"])
 

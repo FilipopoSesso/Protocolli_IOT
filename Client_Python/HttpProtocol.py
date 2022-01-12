@@ -1,4 +1,5 @@
 import Package as pk
+import Drones
 
 #variabili globali
 LAST_DRONE_DATA={}
@@ -63,16 +64,8 @@ def createDrone():
 def sendSensors():
     global LAST_DRONE_DATA
     global TIMER
-    data={
-            "drone":"test",
-            "speed":pk.ran.randint(0,100),
-            "altitude":pk.ran.randint(0,1000), 
-            "battery":pk.ran.randint(0,100),
-            "position":{
-                "lat":pk.ran.randint(516400146, 630304598),
-                "lon":pk.ran.randint(224464416, 341194152)
-                }
-        }
+    data=Drones.getDrone()
+    
     if not LAST_DRONE_DATA:
         LAST_DRONE_DATA=data
     elif data['drone']==LAST_DRONE_DATA['drone'] and data['speed']==LAST_DRONE_DATA['speed'] and data['altitude']==LAST_DRONE_DATA['altitude'] and data['battery']==LAST_DRONE_DATA['battery'] and data['position']['lat']==LAST_DRONE_DATA['position']['lat'] and data['position']['lon']==LAST_DRONE_DATA['position']['lon']:
