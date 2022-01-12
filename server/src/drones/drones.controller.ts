@@ -14,7 +14,14 @@ import { SaveDroneStatusDto } from './dtos/save-drone-status.dto';
 import { CreateDroneDto } from './dtos/create-drone.dto';
 import { DronesService } from './drones.service';
 import { UpdateDroneDto } from './dtos/update-drone.dto';
-import { ClientProxy, Ctx, MessagePattern, MqttContext, Payload } from '@nestjs/microservices';
+import {
+  ClientProxy,
+  Ctx,
+  MessagePattern,
+  MqttContext,
+  MqttRecordBuilder,
+  Payload,
+} from '@nestjs/microservices';
 
 @ApiTags('Drones')
 @Controller('v1/drones')
@@ -66,7 +73,10 @@ export class DronesController {
   }
 
   @MessagePattern('v1/drones/+/data/all')
-  saveDroneStatus(@Payload() data: SaveDroneStatusDto, @Ctx() context: MqttContext) {
+  saveDroneStatus(
+    @Payload() data: SaveDroneStatusDto,
+    @Ctx() context: MqttContext,
+  ) {
     this.logger.log(data);
     this.dronesService.saveStatus(
       data.position,
@@ -75,6 +85,20 @@ export class DronesController {
       data.altitude,
       data.drone,
     );
-    this.client.emit(`v1/drones/${data.drone}/currentposition`, data.position)
+
+    let positionData = { id: data.drone, position: data.position };
+    const record = new MqttRecordBuilder(positionData)
+      .setQoS(1)
+      .setRetain(true)
+      .build();
+
+    this.client
+      .send(`v1/drones/${data.drone}/currentposition`, record)
+      .subscribe();
+  }
+
+  @MessagePattern('v1/drones/+/cmd')
+  turnOnOff() {
+    //todo
   }
 }

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OutboundResponseSerializer } from '../serializers/outbound-response-mqtt.serialize';
 import { Drone } from './drone.entity';
 import { DronesController } from './drones.controller';
 import { DronesService } from './drones.service';
@@ -15,6 +16,7 @@ import { DroneStatus } from './droneStatus.entity';
         options: {
           url: 'mqtt://test.mosquitto.org:1883',
           clientId: '164e59bacb4f41709bbe70eb6803c814',
+          serializer: new OutboundResponseSerializer()
         },
       },
     ]),
