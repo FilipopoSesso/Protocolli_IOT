@@ -1,3 +1,4 @@
+from http import client
 import Package as pk
 import Drones
 
@@ -82,6 +83,11 @@ def sendMessage(topic, msg):
 def sendSensors():
     drone=Drones.getDrone()
     name=drone["drone"]
+    
+    #Implemetare un sistema di coda attraverso un dizionario in locale(dentro il drone)
+    #Quando la connessione con il broker viene meno inizio a salvare i messaggi in una lista
+    #Ad ogni polling controllo la connessione e se ad una certo punto si stabilisce prima svuoto la coda e poi invio il nuovo messaggio
+    
     #pk.os.system('clear')
     sendMessage(f'v1/drones/{name}/data/all', str(drone).replace("'",'"'))
     # sendMessage(f'v1/drones/{name}/data/speed', drone["speed"])
@@ -92,7 +98,10 @@ def sendSensors():
     # sendMessage(f'v1/drones/{name}/data/position/lon', drone["position"]["lon"])
     
     #riottengo la posizione del drone → visualizzazione nella mappa
-    getMessage()
+    #getMessage()
+    
+        
+        
     
     
     
