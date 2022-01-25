@@ -13,12 +13,16 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.MQTT,
-    options: {
-      url: 'mqtt://test.mosquitto.org:1883',
-    },
-  });
+  // app.connectMicroservice<MicroserviceOptions>({
+  //   transport: Transport.RMQ,
+  //   options: {
+  //     urls: ['amqps://uvoymuqw:FAehs0r_Uuz-bfDsM92DnFnGKKvZVRR8@roedeer.rmq.cloudamqp.com/uvoymuqw'],
+  //     queue: 'drones_queue',
+  //     queueOptions: {
+  //       durable: true
+  //     },
+  //   },
+  // });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, //this parameter removes all the invalid properties from the request
@@ -35,7 +39,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.startAllMicroservices();
+  ///await app.startAllMicroservices();
   await app.listen(3000, '0.0.0.0');
 }
 bootstrap();

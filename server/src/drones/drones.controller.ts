@@ -17,10 +17,10 @@ import { UpdateDroneDto } from './dtos/update-drone.dto';
 import {
   ClientProxy,
   Ctx,
+  EventPattern,
   MessagePattern,
-  MqttContext,
-  MqttRecordBuilder,
   Payload,
+  RmqContext,
 } from '@nestjs/microservices';
 
 @ApiTags('Drones')
@@ -28,9 +28,9 @@ import {
 export class DronesController {
   constructor(
     private dronesService: DronesService,
-    @Inject('drone_service') private client: ClientProxy,
+    //@Inject('drone_service') private client: ClientProxy,
   ) {
-    client.connect();
+    //client.connect();
   }
   private readonly logger = new Logger(DronesController.name);
 
@@ -72,33 +72,25 @@ export class DronesController {
     return this.dronesService.update(id, body);
   }
 
-  @MessagePattern('v1/drones/+/data/all')
-  saveDroneStatus(
-    @Payload() data: SaveDroneStatusDto,
-    @Ctx() context: MqttContext,
-  ) {
-    this.logger.log(data);
-    this.dronesService.saveStatus(
-      data.position,
-      data.battery,
-      data.speed,
-      data.altitude,
-      data.drone,
-    );
+  // @EventPattern('v1/drones/*/data/all')
+  // saveDroneStatus(
+  //   @Payload() data: any,
+  //   @Ctx() context: RmqContext,
+  // ) {
+  //   this.logger.log(data);
+  //   this.dronesService.saveStatus(
+  //     data.position,
+  //     data.battery,
+  //     data.speed,
+  //     data.altitude,
+  //     data.drone,
+  //   );
 
-    let positionData = { id: data.drone, position: data.position };
-    const record = new MqttRecordBuilder(positionData)
-      .setQoS(1)
-      .setRetain(true)
-      .build();
+  //   // let positionData = { id: data.drone, position: data.position };
+  //   // const record = new RmqRecordBuilder(positionData).build();
 
-    this.client
-      .send(`v1/drones/${data.drone}/currentposition`, record)
-      .subscribe();
-  }
-
-  @MessagePattern('v1/drones/+/cmd')
-  turnOnOff() {
-    //todo
-  }
+  //   // this.client
+  //   //   .send(`v1/drones/${data.drone}/currentposition`, record)
+  //   //   .subscribe();
+  // }
 }

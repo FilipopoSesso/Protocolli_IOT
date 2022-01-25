@@ -1,3 +1,4 @@
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,17 +10,16 @@ import { DroneStatus } from './droneStatus.entity';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'drone_service',
-        transport: Transport.MQTT,
-        options: {
-          url: 'mqtt://test.mosquitto.org:1883',
-          clientId: '164e59bacb4f41709bbe70eb6803c814',
-          serializer: new OutboundResponseSerializer()
+    RabbitMQModule.forRoot(RabbitMQModule, {
+      exchanges: [
+        {
+          name: 'exDrone',
+          type: 'topic',
         },
-      },
-    ]),
+      ],
+      uri: 'amqps://uvoymuqw:FAehs0r_Uuz-bfDsM92DnFnGKKvZVRR8@roedeer.rmq.cloudamqp.com/uvoymuqw',
+    }),
+    DronesModule, 
     TypeOrmModule.forFeature([Drone, DroneStatus]),
   ],
   controllers: [DronesController],
