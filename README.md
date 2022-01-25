@@ -14,6 +14,8 @@ In una situazione reale avremmo utilizzato un database come PostgreSQL o MySQL, 
 ### Client - Filippo
 
 Abbiamo deciso di utilizzare python per il client per la grande quantità di librerie disponibili e per imparare ad implementare un client web con un linguaggio diverso da quelli utilizzati fino ad ora.
+Abbiamo pensato di creare un secondo client da usare come gestionale in cui si può inserire nuovi droni al database e visualizzare i dati dei droni già presenti, si può iinoltre visualizzare una mappa con la posizione del drone.
+Per semplicità abbiamo fatto tutto in un singolo client senza separare il drone dal gestionale tenendo tutto insieme, in un caso reale andrebbero separati.
 
 
 ### Server - Francesco
