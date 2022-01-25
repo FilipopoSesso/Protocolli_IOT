@@ -28,8 +28,8 @@ import {
 export class DronesController {
   constructor(
     private dronesService: DronesService,
-    //@Inject('drone_service') private client: ClientProxy,
-  ) {
+  ) //@Inject('drone_service') private client: ClientProxy,
+  {
     //client.connect();
   }
   private readonly logger = new Logger(DronesController.name);

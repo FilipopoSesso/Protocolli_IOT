@@ -1,4 +1,4 @@
-import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import {
   BadRequestException,
   Injectable,
@@ -17,6 +17,7 @@ export class DronesService {
     @InjectRepository(Drone) private droneRepo: Repository<Drone>,
     @InjectRepository(DroneStatus)
     private droneStatusRepo: Repository<DroneStatus>,
+    private readonly amqpConnection: AmqpConnection,
   ) {}
 
   private readonly logger = new Logger(DronesService.name);
@@ -90,13 +91,19 @@ export class DronesService {
     queue: 'drones_queue',
   })
   public async droneStatus(data: SaveDroneStatusDto) {
-    this.logger.log(data)
+    this.logger.log(data);
     this.saveStatus(
-          data.position,
-          data.battery,
-          data.speed,
-          data.altitude,
-          data.drone,
-        );
+      data.position,
+      data.battery,
+      data.speed,
+      data.altitude,
+      data.drone,
+    );
+    let positionData = { id: data.drone, position: data.position };
+    this.amqpConnection.publish(
+      'exDrone',
+      `v1/drones/${data.drone}/currentposition`,
+      positionData,
+    );
   }
 }
