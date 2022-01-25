@@ -1,6 +1,6 @@
-
 import Package as pk
 
+#visualizzazione della mappa
 def openMap():
   f = open('Map.html','w')
 
@@ -9,6 +9,7 @@ def openMap():
   <html lang="en">
     <head>
       <meta charset="utf-8">
+      <link rel="icon" href="Drone-PNG.png">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.11.0/css/ol.css" type="text/css">
       <style>
         .map {
@@ -42,15 +43,16 @@ def openMap():
         
         var iconStyle = new ol.style.Style({
           image: new ol.style.Icon(
-            /** @type {module:ol/style/Icon~Options} */ ({
+            ({
               anchor: [0.5, 16],
               anchorXUnits: "fraction",
               anchorYUnits: "pixels",
-              src: "image/icon.png",
+              src: "Drone-PNG.png",
             })
           ),
         });
         
+        //Adding a marker on the map
         var marker = new ol.Feature({
           geometry: new ol.geom.Point(ol.proj.fromLonLat([80.24586, 12.9859])),
         });
@@ -80,9 +82,11 @@ def openMap():
     </body>
   </html>
   """
-
+  
+  #scrittura pagina su file
   f.write(message)
   f.close()
 
+  #apertura pagina html in una nuova finestra del browser
   pk.wb.open_new_tab('Map.html')
 

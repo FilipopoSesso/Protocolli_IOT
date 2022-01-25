@@ -1,34 +1,12 @@
+#librerie
 import Package as pk
 import Drones
 import Map
 import HttpProtocol
 import MqttProtocol
 
-def clear():
-    pk.os.system('clear')
-    
-def parameter(ask):
-    par=''
-    controllo=True
-    while controllo:
-        par=input(f'\n{ask}:')
-        if par!='' or par!=' ':
-            controllo=False
-    clear()
-    return par
-
-def printList(myList):
-    for x in myList:
-        print(f'{myList.index(x)+1}) {x}')
-
+#variabili globali
 DRONELIST=list()
-def getDroneList():
-    DRONELIST=HttpProtocol.getDrones()
-    print("List of drones:")
-    for x in DRONELIST:
-        print(f"{DRONELIST.index(x)+1}) {x['id']} ({x['model']})")
-    
-
 MODELLIST=[
                 "Potensic Drone T35",
                 "Potensic Drone T25",
@@ -41,9 +19,38 @@ MODELLIST=[
                 "DJI Mavic Pro Platinum",
                 "DJI SPARK COMBO"
             ]
-
 MENU="______________MENU______________\n1) Create drone\n2) Drone by name\n3) Drones list\n4) Change drone status\n5) View Map\n6) Exit\n--------------------------------\n"
-#cuore del programma
+
+#Applicazione client per un gestionale posto su una 'torre di controllo' per supervisionare i droni
+
+#pulizia shell
+def clear():
+    pk.os.system('clear')
+
+#richiesta di inserimento di una variabile  
+def parameter(ask):
+    par=''
+    controllo=True
+    while controllo:
+        par=input(f'\n{ask}:')
+        if par!='' or par!=' ':
+            controllo=False
+    clear()
+    return par
+
+#funzione per visualizzare una lista
+def printList(myList):
+    for x in myList:
+        print(f'{myList.index(x)+1}) {x}')
+
+#ottengo i dati dei droni dall'API posta in cloud
+def getDroneList():
+    DRONELIST=HttpProtocol.getDrones()
+    print("List of drones:")
+    for x in DRONELIST:
+        print(f"{DRONELIST.index(x)+1}) {x['id']} ({x['model']})")
+
+#cuore del programma, scelta opzione dal menù
 if __name__=="__main__":
     loop=True
     while loop:

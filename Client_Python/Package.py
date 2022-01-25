@@ -1,4 +1,4 @@
-#file delle librerie
+#file delle librerie utilizzate
 import requests as rq
 import json
 import pandas as pd
@@ -11,5 +11,5 @@ import time
 import paho.mqtt.client as mqtt
 import asyncio
 import os
-
+import pika
 import webbrowser as wb

@@ -3,7 +3,9 @@ import Drones
 
 #variabili globali
 LAST_DRONE_DATA={}
-TIMER=10
+TIMER=3
+IP='10.30.134.15'
+PORT='3000'
 
 #funzione per eseguire l'invio di dati dopo un intervallo di tempo specificato
 def doPolling(func):
@@ -41,8 +43,8 @@ def statusCode(code):
     elif code == 404:
         print("Errore Server...")
   
-#creazione di dreone/i      
-def createDrone(name, model):
+#creazione di drone/i      
+def createDrone():
     #region crazione droni automatica
     # numDornes=pk.ran.randint(0,10)
     
@@ -65,16 +67,13 @@ def createDrone(name, model):
         #         "id":f"drone{count}",
         #         "model":modelList[pk.ran.randint(0,9)]
         #     }
-        # doPost("http://10.30.134.15:3000/v1/drones/new",data)
+        # doPost(f"http://{IP}:{PORT}/v1/drones/new",data)
         # numDornes-=1
         # count+=1
     #endregion
     
-    data={
-            "id":name,
-            "model":model
-        }
-    doPost("http://10.30.134.15:3000/v1/drones/new",data)
+    data=Drones.getDrone()
+    doPost(f"http://{IP}:{PORT}/v1/drones/new",data)
 
 #invio dati registrati dai sensori    
 # def sendSensors():
@@ -88,17 +87,17 @@ def createDrone(name, model):
 #         TIMER=20
 #     else:TIMER=10
 #     #print(TIMER)
-#     doPost("http://10.30.134.15:3000/v1/drones/status",data)
+#     doPost(f"http://{IP}:{PORT}/v1/drones/status",data)
 
 #Accensione o Spegnimento del drone
 def changeStatus(name):
     #name='test'
-    drone=doGet(f"http://10.30.134.15:3000/v1/drones/{name}")
+    drone=doGet(f"http://{IP}:{PORT}/v1/drones/{name}")
     try:
         if drone['state']==True:drone['state']=False
         elif drone['state']==False or drone['state']==None:drone['state']=True
     
-        doPatch(f"http://10.30.134.15:3000/v1/drones/{name}",drone)
+        doPatch(f"http://{IP}:{PORT}/v1/drones/{name}",drone)
     except:
         pass
     
@@ -107,10 +106,10 @@ def changeStatus(name):
 
 #ottengo solo il drone corrispondente al nome passato come parametre
 def getDroneByName(name):
-    drone=doGet(f"http://10.30.134.15:3000/v1/drones/{name}/status")
+    drone=doGet(f"http://{IP}:{PORT}/v1/drones/{name}/status")
     return drone
 
 #ottengo tutti i droni presenti nel DB
 def getDrones():
-    return doGet("http://10.30.134.15:3000/v1/drones")
+    return doGet(f"http://{IP}:{PORT}/v1/drones")
     
