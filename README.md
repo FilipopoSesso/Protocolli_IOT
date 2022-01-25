@@ -18,7 +18,8 @@ Abbiamo deciso di utilizzare python per il client per la grande quantità di lib
 
 ### Server - Francesco
 
-Abbiamo deciso di utilizzare NestJS, un framework di NodeJS, perchè Francesco lo sta studiando per conto suo e voleva provare ad usarlo e anche perchè è scritto in Typescript e questo ci permette di avere un codice compilato al contrario di javascript e quindi capire più velocemente se ci sono errori e dove sono.
+Abbiamo deciso di utilizzare NestJS, un framework di NodeJS, perchè Francesco lo sta studiando per conto suo e voleva provare ad usarlo, inoltre è scritto in Typescript e questo ci permette di avere un codice compilato al contrario di javascript e quindi capire più velocemente se ci sono errori e dove sono.
+Sia il server con mqtt che quello con amqp (rabbitMQ) sono ibridi nel senso che per la comunicazione del drone usano mqtt o amqp ma ci sono anche delle api http con cui un secondo client (un gestionale) può interagire per aggiungere droni al database o per visualizzare i dati.
 
 
 ### Swagger
